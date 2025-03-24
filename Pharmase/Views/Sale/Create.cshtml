@@ -1,0 +1,75 @@
+﻿@model Pharmase.ViewModels.SaleViewModel
+
+@{
+    ViewData["Title"] = "Create Sale";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="sale-container">
+    <h1 class="sale-title">@ViewData["Title"]</h1>
+
+    <form id="saleForm" asp-action="Create">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <!-- API URLs Container (hidden) -->
+        <div id="apiUrls"
+             data-get-medicines="@Url.Action("GetMedicines", "Sale")"
+             hidden></div>
+
+        <!-- Medicine Search -->
+        <div class="form-group">
+            <label for="medicineSearch">Search for Medicine:</label>
+            <input type="text" id="medicineSearch"
+                   class="form-control medicine-search-input"
+                   placeholder="Enter medicine name..." />
+        </div>
+
+        <!-- Suggested Medicines -->
+        <div id="suggestedMedicines" class="list-group mt-2"></div>
+
+        <!-- Items Table -->
+        <table class="table sale-items-table">
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="saleItemsList"></tbody>
+        </table>
+
+        <!-- Total Price -->
+        <h3>Total Price: <span id="totalPrice" class="total-price">0.00</span> EGP</h3>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn submit-sale-btn">Complete Sale</button>
+    </form>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Confirm Sale</h3>
+        </div>
+        <div class="modal-content">
+            <p>Are you sure you want to complete this sale?</p>
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="modal-btn confirm-btn">Yes, Complete Sale</button>
+            <button type="button" class="modal-btn cancel-btn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Styles & Scripts -->
+<link rel="stylesheet" href="~/css/sales.css" />
+
+@section Scripts {
+    <script src="~/js/sales.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

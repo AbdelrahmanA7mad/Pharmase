@@ -1,0 +1,264 @@
+﻿:root {
+    --primary-color: #4361ee;
+    --success-color: #2ec4b6;
+    --info-color: #3a86ff;
+    --danger-color: #ef476f;
+    --background-color: #f8f9fa;
+    --card-background: rgba(255, 255, 255, 0.9);
+    --text-color: #2b2d42;
+    --border-radius: 16px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background: linear-gradient(135deg, #f6f8ff 0%, #f1f4ff 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.sales-report {
+    font-family: 'Cairo', 'Tahoma', sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.report-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.glass-card {
+    background: var(--card-background);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+    }
+
+.filter-form {
+    display: grid;
+    gap: 2rem;
+}
+
+.date-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+    .glass-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+
+.preset-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(67, 97, 238, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+    .preset-btn:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+    .btn-primary:hover, .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: var(--card-background);
+    transition: var(--transition);
+}
+
+    .stat-card.primary {
+        border-left: 5px solid var(--primary-color);
+    }
+
+    .stat-card.success {
+        border-left: 5px solid var(--success-color);
+    }
+
+    .stat-card.info {
+        border-left: 5px solid var(--info-color);
+    }
+
+.stat-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.primary .stat-icon {
+    color: var(--primary-color);
+}
+
+.success .stat-icon {
+    color: var(--success-color);
+}
+
+.info .stat-icon {
+    color: var(--info-color);
+}
+
+.stat-content h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.stat-value {
+    margin: 0.5rem 0 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.chart-container {
+    margin: 3rem 0;
+    padding: 2rem;
+}
+
+.extremes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.extreme-card {
+    text-align: center;
+}
+
+.extreme-content h5 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.extreme-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+    .extreme-value.success {
+        color: var(--success-color);
+    }
+
+    .extreme-value.danger {
+        color: var(--danger-color);
+    }
+
+.no-data-alert {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin: 3rem 0;
+}
+
+@media (max-width: 768px) {
+    .sales-report {
+        padding: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .extreme-value {
+        font-size: 1.5rem;
+    }
+}

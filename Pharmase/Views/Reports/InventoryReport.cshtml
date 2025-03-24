@@ -1,0 +1,234 @@
+﻿@model List<Pharmase.ReportViewModel.InventoryReportItem>
+
+<div class="container inventory-report">
+    <div class="report-header">
+        <h2 class="report-title" data-translation="Inventory_Status_Report">📦 Inventory Status Report</h2>
+        <div class="report-summary">
+            <div class="summary-card total">
+                <span class="count">@Model.Count</span>
+                <span class="label" data-translation="Total_Medicines">Total Medicines</span>
+            </div>
+            <div class="summary-card low-stock">
+                <span class="count">@Model.Count(m => m.CurrentStock < 50)</span>
+                <span class="label" data-translation="Low_Stock_Items">Low Stock Items</span>
+            </div>
+            <div class="summary-card expired">
+                <span class="count">@Model.Count(m => m.ExpiryDate.HasValue && m.ExpiryDate < DateTime.Today)</span>
+                <span class="label" data-translation="Expired_Items">Expired Items</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th data-translation="Medicine">Medicine</th>
+                    <th data-translation="Category">Category</th>
+                    <th data-translation="Stock_Level">Stock Level</th>
+                    <th data-translation="Expiry_Status">Expiry Status</th>
+                    <th class="text-right" data-translation="Expiry_Date">Expiry Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var isExpired = item.ExpiryDate.HasValue && item.ExpiryDate < DateTime.Today;
+                    var stockStatus = item.CurrentStock switch
+                    {
+                        int x when x < 10 => "critical",
+                        int x when x < 50 => "low",
+                        int x when x < 100 => "medium",
+                        _ => "good"
+                    };
+
+                    <tr class="@stockStatus @(isExpired ? "expired" : "")">
+                        <td>@item.MedicineName</td>
+                        <td>@(item.Category ?? "Uncategorized")</td>
+                        <td>
+                            <div class="stock-indicator">
+                                <span class="stock-value">@item.CurrentStock</span>
+                                <div class="stock-bar" style="width: @(Math.Min(item.CurrentStock, 100))%"></div>
+                            </div>
+                        </td>
+                        <td>
+                            @if (isExpired)
+                            {
+                                <span class="status-badge expired" data-translation="Expired">⚠️ Expired</span>
+                            }
+                            else if (item.ExpiryDate.HasValue)
+                            {
+                                <span class="status-badge" data-translation="Valid">✅ Valid</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge" data-translation="N/A">ℹ️ N/A</span>
+                            }
+                        </td>
+                        <td class="text-right">
+                            @(item.ExpiryDate?.ToString("yyyy-MM-dd") ?? "N/A")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    :root {
+        --color-good: #e6f4ea;
+        --color-medium: #fff3cd;
+        --color-low: #ffe6e6;
+        --color-critical: #f8d7da;
+        --color-expired: #ffcccc;
+        --color-primary: #2c3e50;
+        --color-secondary: #3498db;
+    }
+
+    .container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .report-header {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .report-title {
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .report-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+
+    .summary-card {
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        background: white;
+        border: 1px solid #eee;
+    }
+
+        .summary-card .count {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+    .table-responsive {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        overflow-x: auto;
+    }
+
+    .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+        .report-table th {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .report-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .report-table tr:hover {
+            background: #f8f9fa;
+        }
+
+    .stock-indicator {
+        position: relative;
+        height: 24px;
+        background: #f0f0f0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .stock-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: var(--color-secondary);
+        opacity: 0.3;
+    }
+
+    .stock-value {
+        position: relative;
+        z-index: 1;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+    .good {
+        background: var(--color-good);
+    }
+
+    .medium {
+        background: var(--color-medium);
+    }
+
+    .low {
+        background: var(--color-low);
+    }
+
+    .critical {
+        background: var(--color-critical);
+    }
+
+    .expired {
+        background: var(--color-expired);
+    }
+
+    .status-badge.expired {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    @@media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .report-table th,
+        .report-table td {
+            padding: 0.75rem;
+        }
+    }
+</style>

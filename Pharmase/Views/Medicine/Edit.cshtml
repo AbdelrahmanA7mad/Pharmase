@@ -1,0 +1,71 @@
+﻿@model Pharmase.ViewModels.CreateMedicineViewModel
+
+@{
+    ViewData["Title"] = "Edit Medicine";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="text-center" data-translate="edit_medicine">Edit Medicine</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <div class="row">
+                    <!-- Medicine Name -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label" data-translate="medicine_name">Medicine Name</label>
+                            <input type="text" class="form-control" asp-for="Name" data-translate="enter_medicine_name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="CategoryId" class="form-label" data-translate="category">Category</label>
+                            <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
+                                <option disabled selected data-translate="select_category">Select Category</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Stock" class="form-label" data-translate="stock">Stock</label>
+                            <input type="number" class="form-control" asp-for="Stock" placeholder="Enter stock quantity" data-translate="enter_stock_quantity">
+                            <span asp-validation-for="Stock" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Price" class="form-label" data-translate="unit_price">Unit Price</label>
+                            <input type="number" class="form-control" asp-for="Price" placeholder="Enter price" step="0.01" data-translate="enter_price">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Expiry Date -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="ExpireDate" class="form-label" data-translate="expiry_date">Expiry Date</label>
+                            <input type="date" class="form-control" asp-for="ExpireDate"
+                                   value="@((Model.ExpireDate != DateTime.MinValue) ? Model.ExpireDate.ToString("yyyy-MM-dd") : "")" required>
+                            <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn-primary" data-translate="update_medicine">Update Medicine</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

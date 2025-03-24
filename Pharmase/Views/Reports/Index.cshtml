@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Reports Dashboard";
+}
+
+<div class="reports-dashboard">
+   <h1 data-translate="reports">Reports</h1>
+
+    <div class="report-cards">
+        <a asp-action="SalesReport" class="report-card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+                    <h3 data-translate="sales_report">Sales Report</h3>
+            <p>Analyze sales performance and trends</p>
+        </a>
+
+        <a asp-action="InventoryReport" class="report-card">
+            <div class="card-icon">
+                <i class="fas fa-capsules"></i>
+            </div>
+                    <h3 data-translate="inventory_report">Inventory Report</h3>
+            <p>Track stock levels and expirations</p>
+        </a>
+    </div>
+</div>
+
+<style>
+    .reports-dashboard {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .report-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .report-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+        text-decoration: none;
+        color: inherit;
+    }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-icon {
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+</style>

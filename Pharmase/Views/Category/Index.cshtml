@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary" data-translate="cats">Categories</h2>
+        <a asp-controller="Category" asp-action="CreateCategory" class="btn-primary text-decoration-none" data-translate="create_category_btn">
+            <i class="fas fa-plus"></i> Add Category
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center" data-translate="category_name">Category Name</th>
+                    <th data-translate="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var category in Model)
+                    {
+                        <tr>
+                            <td class="align-middle text-center">@category.Name</td>
+                            <td class="text-center">
+                                <button class="btn btn-danger js-delete" data-id="@category.Id" aria-label="Delete @category.Name">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">No categories available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/deletecategory.js"></script>
+}

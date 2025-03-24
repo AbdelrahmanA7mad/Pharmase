@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pharmase</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Pharmase.styles.css" asp-append-version="true" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fas fa-mortar-pestle"></i>
+                <a class="text-decoration-none fw-bold" data-translate="brand" asp-area="" asp-controller="Home" asp-action="Index">PharmaCare</a>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link text-dark" data-translate="dashboard"  asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+                <i class="bi bi-house"></i>
+
+                <a class="nav-link text-dark" data-translate="inventory" asp-area="" asp-controller="Inventory" asp-action="Index">Inventory</a>
+                <a class="nav-link text-dark" data-translate="sales" asp-area="" asp-controller="Sale" asp-action="Index">Sales</a>
+                <a class="nav-link text-dark" data-translate="reports" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
+            </div>
+            <div class="nav-actions">
+                <button onclick="toggleLanguage()" class="lang-btn">
+                    <span class="current-lang">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/js/translations.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

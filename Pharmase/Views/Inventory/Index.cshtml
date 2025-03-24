@@ -1,0 +1,101 @@
+﻿<div class="dashboard">
+    <div class="page-header">
+        <h1 data-translate="inventory">Inventory</h1>
+        <div>
+            <a asp-controller="Medicine" asp-action="Create">
+                <button class="btn-primary" data-translate="add_medicine">Add Medicine</button>
+            </a>
+            <a asp-controller="Category" asp-action="Index">
+                <button class="btn-primary" data-translate="add_category">Manage Category</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="search-bar">
+        <div class="search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search medicines..." data-translate="search_medicines" class="search-field" />
+        </div>
+        <div class="filters">
+            <select class="filter-select">
+                <option value="all" data-translate="all_categories">All Categories</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-translate="medicine_name">Medicine Name</th>
+                        <th data-translate="category">Category</th>
+                        <th data-translate="stock">Stock</th>
+                        <th data-translate="unit_price">Unit Price</th>
+                        <th data-translate="expiry">Expiry Date</th>
+                        <th data-translate="actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var medicine in Model.medicines)
+                    {
+                        <tr>
+                            <td>@medicine.Name</td>
+                            <td data-category-id="@medicine.Category.Id">@medicine.Category.Name</td> <!-- Add the data-category-id attribute -->
+                            <td>@medicine.StockQuantity</td>
+                            <td>@medicine.UnitPrice.ToString("C")</td>
+                            <td>@medicine.ExpiryDate.ToString("yyyy-MM-dd")</td>
+                            <td class="actions">
+                                    <a class="btn btn-primary rounded rounded-3" href="@Url.Action("Edit", "Medicine", new { id = medicine.Id })">
+                                        <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="javascript:;" class="btn btn-danger rounded rounded-3 js-delete" data-id="@medicine.Id">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Search filter
+    document.querySelector('.search-field').addEventListener('input', function () {
+        var query = this.value.toLowerCase();
+        var rows = document.querySelectorAll('table tbody tr');
+        rows.forEach(function (row) {
+            var name = row.querySelector('td:first-child').textContent.toLowerCase();
+            if (name.indexOf(query) !== -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // Category filter
+    document.querySelector('.filter-select').addEventListener('change', function () {
+        var categoryId = this.value;
+        var rows = document.querySelectorAll('table tbody tr');
+        rows.forEach(function (row) {
+            var categoryCell = row.querySelector('td:nth-child(2)').getAttribute('data-category-id'); // Use the category ID
+            if (categoryId === "all" || categoryCell === categoryId) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+@section Scripts
+{
+    <script src="~/js/deletemed.js"></script>
+}

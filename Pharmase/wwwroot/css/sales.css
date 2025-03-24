@@ -1,0 +1,330 @@
+﻿/* General Styling */
+.sale-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.sale-title {
+    color: #2c3e50;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Search Section */
+.medicine-search-input {
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+    .medicine-search-input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+/* Suggested Medicines */
+.suggested-medicines-list {
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggested-medicine-item {
+    border: none;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+}
+
+    .suggested-medicine-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+
+/* Items Table */
+.sale-items-table {
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .sale-items-table th {
+        background-color: #3498db;
+        color: white;
+        padding: 15px;
+    }
+
+.quantity-input {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+    .quantity-input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+/* Total Price */
+.total-price {
+    color: #27ae60;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Submit Button */
+.submit-sale-btn {
+    background-color: #3498db;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+    .submit-sale-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sale-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .sale-items-table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sale-items-table thead {
+        display: none;
+    }
+
+    .sale-items-table td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+    }
+
+        .sale-items-table td::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            color: #3498db;
+        }
+}
+/* Confirmation Modal */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.modal-container.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .modal-header h3 {
+        color: #2c3e50;
+        margin: 0;
+    }
+
+.modal-body p {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.confirm-btn {
+    background-color: #27ae60;
+    color: white;
+}
+
+    .confirm-btn:hover {
+        background-color: #219a52;
+        transform: translateY(-1px);
+    }
+
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+    .cancel-btn:hover {
+        background-color: #c0392b;
+        transform: translateY(-1px);
+    }
+
+/* Add this CSS to your stylesheet */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+    .modal-overlay.show .modal-box {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+    .modal-header h3 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+.modal-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+    .modal-content p {
+        color: #666;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+.modal-actions {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    border-top: 1px solid #eee;
+}
+
+.modal-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.confirm-btn {
+    background: #27ae60;
+    color: white;
+}
+
+    .confirm-btn:hover {
+        background: #219a52;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+    }
+
+.cancel-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+    .cancel-btn:hover {
+        background: #c0392b;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
+    }
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .delete-btn:hover {
+        background: #c0392b;
+        transform: scale(1.05);
+    }
+
+    .delete-btn i {
+        margin-right: 5px;
+    }

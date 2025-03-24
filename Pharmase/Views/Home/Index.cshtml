@@ -1,0 +1,50 @@
+﻿@model Pharmase.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="dashboard">
+    <div class="stats-container">
+        <div class="stat-card">
+            <i class="fas fa-pills"></i>
+            <div class="stat-info">
+                <h3 data-translate="total_medicines">Total Medicines</h3>
+                <p>@Model.TotalMedicines</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-dollar-sign"></i>
+            <div class="stat-info">
+                <h3 data-translate="today_sales">Today's Sales</h3>
+                <p>@Model.TodaySales.ToString("C")</p> <!-- Formats the number as currency -->
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-section">
+            <h2 data-translate="low_stock">Low Stock Alert</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-translate="medicine_name">Medicine Name</th>
+                            <th data-translate="quantity">Quantity</th>
+                            <th data-translate="expiry">Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var medicine in Model.LowStockMedicines)
+                        {
+                            <tr>
+                                <td>@medicine.Name</td>
+                                <td>@medicine.StockQuantity</td>
+                                <td>@medicine.ExpiryDate.ToString("yyyy-MM-dd")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

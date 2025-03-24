@@ -1,0 +1,162 @@
+﻿@model Pharmase.ReportViewModel.SalesReportViewModel
+
+@{
+    ViewData["Title"] = "تقرير المبيعات";
+}
+<link href="~/css/repo.css" rel="stylesheet" />
+<div class="sales-report" dir="rtl">
+    <!-- Header Section -->
+    <div class="report-header">
+        <h2 class="report-title">@ViewData["Title"]</h2>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="report-filters glass-card mb-6">
+        <form asp-action="SalesReport" method="get" class="filter-form">
+            <div class="date-filters">
+                <div class="date-input-group">
+                    <label for="startDate" class="form-label">من تاريخ</label>
+                    <input type="date" id="startDate" name="startDate"
+                           value="@Model.StartDate?.ToString("yyyy-MM-dd")"
+                           class="form-control glass-input"
+                           max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="date-input-group">
+                    <label for="endDate" class="form-label">إلى تاريخ</label>
+                    <input type="date" id="endDate" name="endDate"
+                           value="@Model.EndDate?.ToString("yyyy-MM-dd")"
+                           class="form-control glass-input"
+                           max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+
+            <!-- Preset Buttons -->
+            <div class="preset-buttons">
+                <button type="button" class="preset-btn" onclick="setPreset('week')">
+                    أسبوع <i class="fas fa-calendar-week"></i>
+                </button>
+                <button type="button" class="preset-btn" onclick="setPreset('month')">
+                    شهر <i class="fas fa-calendar-alt"></i>
+                </button>
+                <button type="button" class="preset-btn" onclick="setPreset('year')">
+                    سنة <i class="fas fa-calendar-day"></i>
+                </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="submit" class="btn-primary">
+                    تطبيق الفلتر <i class="fas fa-filter"></i>
+                </button>
+                <a asp-action="SalesReport" class="btn-secondary">
+                    إعادة تعيين <i class="fas fa-sync"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Validation Summary -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary()
+        </div>
+    }
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <!-- Total Sales Card -->
+        <div class="stat-card primary">
+            <div class="stat-icon">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="stat-content">
+                <h5>إجمالي المبيعات</h5>
+                <p class="stat-value">@Model.TotalSales.ToString("N2") ج</p>
+            </div>
+        </div>
+
+        <!-- Average Sale Card -->
+        <div class="stat-card success">
+            <div class="stat-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-content">
+                <h5>متوسط البيع</h5>
+                <p class="stat-value">@Model.AverageSale.ToString("N2") ج</p>
+            </div>
+        </div>
+
+        <!-- Transactions Card -->
+        <div class="stat-card info">
+            <div class="stat-icon">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <div class="stat-content">
+                <h5>عدد المعاملات</h5>
+                <p class="stat-value">@Model.TotalTransactions.ToString("N0")</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Extremes -->
+    @if (Model.DailySales?.Any() == true)
+    {
+        <div class="extremes-container">
+            <div class="extreme-card glass-card">
+                <div class="extreme-content">
+                    <h5><i class="fas fa-arrow-up"></i> أعلى مبيع يومي</h5>
+                    <p class="extreme-value success">@Model.HighestDailySale.ToString("N2") ج</p>
+                </div>
+            </div>
+            <div class="extreme-card glass-card">
+                <div class="extreme-content">
+                    <h5><i class="fas fa-arrow-down"></i> أقل مبيع يومي</h5>
+                    <p class="extreme-value danger">@Model.LowestDailySale.ToString("N2") ج</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="no-data-alert">
+            <i class="fas fa-info-circle"></i> لا توجد بيانات مبيعات في الفترة المحددة
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function setPreset(period) {
+            const today = new Date();
+            let startDate = new Date();
+            let endDate = new Date();
+
+            switch (period) {
+                case 'week':
+                    startDate.setDate(today.getDate() - 7);
+                    break;
+                case 'month':
+                    // Set to first day of previous month
+                    startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                    // Set end date to last day of previous month
+                    endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+                    break;
+                case 'year':
+                    startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+                    break;
+            }
+
+            // Format dates to local timezone
+            function formatDate(date) {
+                const offset = date.getTimezoneOffset() * 60000;
+                const localDate = new Date(date - offset);
+                return localDate.toISOString().split('T')[0];
+            }
+
+            document.getElementById('startDate').value = formatDate(startDate);
+            document.getElementById('endDate').value = formatDate(endDate);
+        }
+    </script>
+}
